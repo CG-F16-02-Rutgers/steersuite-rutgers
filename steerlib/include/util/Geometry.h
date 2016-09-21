@@ -165,6 +165,7 @@ namespace Util {
 		Vector operator-(const Point &pt)  const {return Vector(x - pt.x,  y - pt.y,  z - pt.z);  }
 		Point operator* (float c) const { return Point(c*x, c*y, c*z); }
 		Point operator/ (float c) const { float cInverse = 1.0f / c; return Point(cInverse*x, cInverse*y, cInverse*z); }
+		Point operator= (const Vector &vec) const { return Point(vec.x, vec.y, vec.z); }
 
 		//Added by Jennie Shapira for testing a timestamp in TrackReader for ShadowAI
 		bool operator==(float c) const { float epsilon = 0.001f; return ((c <= y+epsilon) && (c >= y-epsilon));}
