@@ -49,6 +49,9 @@ void SimulationRecorderModule::preprocessSimulation() {
 	const std::vector<SteerLib::AgentInterface*> & agents = _engine->getAgents();
 	const std::set<SteerLib::ObstacleInterface*> & obstacles = _engine->getObstacles();
 
+	//Get camera --Tian
+	SteerLib::Camera camera = _engine->getCamera();
+
 	// if the simulation is reading a usual test case, then this filename is stored in 
 	// the recfile so that initial conditions can be validated.
 	// otherwise, the recfile is not associated with any test case filename.
@@ -61,6 +64,13 @@ void SimulationRecorderModule::preprocessSimulation() {
 	for (obstacleIter = obstacles.begin(); obstacleIter != obstacles.end(); ++obstacleIter) {
 		_simulationWriter->addObstacleBoundingBox((*obstacleIter)->getBounds());
 	}
+
+	//Get camera data --CS523 Tian
+	Util::Point cameraPos(0.0f, 0.0f, 0.0f);
+	Util::Point cameraLookAt(0.0f, 0.0f, 0.0f);
+	cameraPos = camera.position();
+	cameraLookAt = camera.lookat();
+	_simulationWriter->addCameraView(cameraPos.x, cameraPos.y, cameraPos.z, cameraLookAt.x, cameraLookAt.y, cameraLookAt.z);
 
 	// Technically, the number of frames is one more than the number of simulation steps taken.
 	// here, write the zero-th frame, which represents initial conditions.
